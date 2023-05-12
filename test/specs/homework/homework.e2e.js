@@ -2,52 +2,54 @@ describe('Homework', async () => {
 
     it('should open page and create screenshot', async () => {
 
-        // sem vypracuj domácí úkol (Lekce_01)
-        await browser.reloadSession('chrome');
+// domácí úkol (Lekce_01)
+// npm run wdio -- --suite homework
+       
+        await browser.reloadSession();
 
         await browser.url('/registrace');
-        
-        await browser.saveScreenshot('signup_page.png');
 
-        const windowSize = await browser.getWindowSize();
+/* const windowSize = await browser.getWindowSize();
         console.log(windowSize);
-    
-/* 
-(Lekce_02)
 
-Najdi nejvhodnější:
-1. Políčko pro jméno a příjmení id="name"
-2. Políčko pro email id="email"
-3. Políčko pro zadání hesla id="password"
-4. Políčko pro kontrolu zadaného hesla id="password-confirm"
-5. Tlačítko na registraci class="btn btn-primary"
+        const allCookies = await browser.getCookies();
+        console.log(allCookies);
 
-Dobrovolné:
-Tvým úkolem je si zatím jen selektory najít a otestovat v Developer Tools. 
-Pokud se na to cítíš, můžeš zkusit zapsat najít elementy a zapsat je do homework.e2e.js 
-podobně jako jsme to dělali ve cvičení.
+        await browser.saveScreenshot('signuPage_HO1.png');
 
+        await browser.pause(500);
 */
     
-        const nameField = await $('#name');
-        console.log(await nameField.getHTML ()) ;
+// domácí úkol (Lekce_02) → najdi nejvhodnější selektory
+        
+        const nameField = $('#name');
+        console.log('→ Name field HTML: ' + await nameField.getHTML());
 
-        var nameField2 = await $('#name');
-        console.log(await nameField2.getHTML ()) ;
-        console.log(await nameField2.getLocation ()) ;
+        const emailField = $('#email');
+        console.log('→ Email Field HTML: ' + await emailField.getHTML());
 
-        const emailField = await $('#email');
-        console.log(await emailField.getHTML());
+        const passwordField = $('#password');
+        console.log('→ Password Field HTML: ' + await passwordField.getHTML());
 
-        const passwordField = await $('#password');
-        console.log(await passwordField.getHTML());
+        const passwordConfirmationField = $('#password-confirm');
+        console.log('→ Password Confirmation Field HTML: ' + await passwordConfirmationField.getHTML());
 
-        const passConfField = await $('#password-confirm');
-        console.log (await passwordField.getHTML());
+        const submitButton = $('.btn-primary');
+        console.log('→ Submit Button HTML: ' + await submitButton.getHTML());
+        console.log('→ Submit Button Location: ' + await submitButton.getLocation());
+        console.log('→ Submit Button Text: ' + await submitButton.getText());
 
-        const regButton = await $('.btn-primary');
-        console.log (await regButton.getText ());
-    
+// domácí úkol (Lekce_03) → najdi nejvhodnější selektory
+
+        await nameField.setValue('Mrkef von Záhon');
+        await emailField.setValue('carrot@cake.com');
+        await passwordField.setValue('Heslo123');
+        await passwordConfirmationField.setValue('Heslo12');
+        await browser.pause(500);
+        await passwordConfirmationField.clearValue('Heslo123');
+        await submitButton.click();
+        await browser.pause(5000);
+
     });
 
 });
