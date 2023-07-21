@@ -2,7 +2,7 @@ import {username, password} from './fixtures.js'
 // import LoginPage from '../pageobjects/login.page'
 // import ApplicationsPage from '../pageobjects/applications.page'
 
-describe('Czechitas Login Page', async () => {
+/*describe('Czechitas Login Page', async () => {
     it('should open login page', async () => {
 
         await browser.reloadSession();
@@ -16,7 +16,7 @@ describe('Czechitas Login Page', async () => {
 
 //  https://team8-2022brno.herokuapp.com/prihlaseni
         
-/*  LESSON_02 - exercise_1
+//  LESSON_02 - exercise_1
         //1. tag → form element, input element, button element
         const formElementTag = $('form');
         console.log("→ Form Tag HTML: " + await formElementTag.getHTML());
@@ -30,17 +30,17 @@ describe('Czechitas Login Page', async () => {
         console.log("→ Button Tag HTML: " + await buttonElementTag.getHTML());
         
         //2. políčko email podle id (#)
-        const emailField = $('#email');
-        console.log("→ Email Field HTML: " + await emailField.getHTML());
+       // const emailField = $('#email');
+      //  console.log("→ Email Field HTML: " + await emailField.getHTML());
 
         //políčko password podle id (#)
-        const passwordField = $('#password');
-        console.log("→ Password Field HTML: " + await passwordField.getHTML());
+      //  const passwordField = $('#password');
+      //  console.log("→ Password Field HTML: " + await passwordField.getHTML());
 
         //3. podle třídy (.) 
-        const loginButton = $('.btn-primary');
-        console.log("→ Login Button text: " + await loginButton.getText());
-        console.log("→ Login Button HTML: " + await loginButton.getHTML());
+      //  const loginButton = $('.btn-primary');
+      //  console.log("→ Login Button text: " + await loginButton.getText());
+      //  console.log("→ Login Button HTML: " + await loginButton.getHTML());
 
         const logoCzechitas = $('.logo');
         console.log("→ Location of Home Page logo: " + await logoCzechitas.getLocation());
@@ -84,7 +84,7 @@ describe('Czechitas Login Page', async () => {
         console.log('→ Selector By Text_HTML: ' + findElementByText.getHTML());
         console.log('→ Selector By Text_Text: ' + findElementByText.getText());
 
-*/
+
 
 //  LESSON_03 - exercise_1
         const emailField = $('#email');
@@ -132,3 +132,110 @@ describe('Czechitas Login Page', async () => {
     });
 
 });
+
+*/
+
+// LESSON04-exercise_1
+
+//da-app.admin@czechitas.cz
+//Czechitas123
+describe('Czechitas Login Page', async () => {
+
+        beforeEach('should open login page', async () => {
+                await browser.reloadSession();
+                await browser.url('/prihlaseni');
+        })
+        it('should not log in - no credentials', async () => {
+                const emailField = $('#email');
+                const passwordField = $('#password');
+                const loginButton = $('.btn-primary'); 
+                await loginButton.click();
+                console.log('Email Field is Displayed: ' + await emailField.isDisplayed());
+                console.log('Email Field is Enabled: ' + await emailField.isEnabled());
+                console.log('Password Filed is Displayed: ' + await passwordField.isDisplayed());
+                console.log('Password Field is Enabled: ' + await passwordField.isEnabled());
+                
+        })
+        it('should not log in - invalid credentials', async () => {
+                const emailField = $('#email');
+                const passwordField = $('#password');
+                const loginButton = $('.btn-primary');
+                const toastMessage = $('#toast-container'); 
+                await emailField.clearValue();
+                await passwordField.clearValue();
+                await emailField.setValue('da-app.admin@czechitas.cz');
+                await passwordField.setValue('NESPRÁVNÉ-HESLO');
+                await loginButton.click();
+                console.log('Email Field is Displayed: ' + await emailField.isDisplayed());
+                console.log('Email Field is Enabled: ' + await emailField.isEnabled());
+                console.log('Password Filed is Displayed: ' + await passwordField.isDisplayed());
+                console.log('Password Field is Enabled: ' + await passwordField.isEnabled());
+                console.log('Toast Message is Displayed: ' + await toastMessage.isDisplayed());
+                console.log('Text of Toast Message: ' + await toastMessage.getText());
+        })
+        it('should log in - valid credentials', async () => {
+                const emailField = $('#email');
+                const passwordField = $('#password');
+                const loginButton = $('.btn-primary');
+                await emailField.setValue('da-app.admin@czechitas.cz');
+                await passwordField.setValue('Czechitas123');
+                await loginButton.click();})
+                // console.log('User Name is Displayed: ' + await userName.isDisplayed());
+                // console.log('User Name: ' + await userName.getText());
+        
+        it('should log out', async () => {
+                const emailField = $('#email');
+                const passwordField = $('#password');
+                const loginButton = $('.btn-primary');
+                await emailField.setValue('da-app.admin@czechitas.cz');
+                await passwordField.setValue('Czechitas123');
+                await loginButton.click();})
+                
+                const userName = $('.dropdown-toggle');
+                const logoutLink = $('#logout-link');
+                const memberButton = $('=Přihlásit');
+                const header = $('h1');
+                await userName.click();
+                await logoutLink.click();
+                console.log('Logout verification: '+ await memberButton.isDisplayed());
+                console.log('Text: ' + await memberbutton.getText()); 
+                console.log(await header.getText());
+        })
+
+
+describe.only('Applications page', async () => {
+        
+        before('should log in', async () => {
+                await browser.reloadSession();
+                await browser.url('/prihlaseni');
+       
+                const emailField = $('#email');
+                const passwordField = $('#password');
+                const loginButton = $('.btn-primary');
+                
+                await emailField.setValue('da-app.admin@czechitas.cz');
+                await passwordField.setValue('Czechitas123');
+                await loginButton.click();
+        })
+        it('should open applications', async () => {
+                const applicationsLink = $('=Přihlášky');
+                await applicationsLink.click();
+        })
+        it('should display all table rows', async () => {
+                const rows = await $('.dataTable').$('tbody').$$('tr');
+                const tableInfo =$('#DataTables_Table_0_info');
+                console.log('There are ' + rows.length + ' rows in the table');
+                for (const row of rows) {
+                        const rowText = await row.getText();
+                        console.log(rowText);
+                }
+                console.log('Displayed: ' + await tableInfo.getText());
+        })
+        it('should search in table', async () => {
+                const searchInput = $('input[type="search"]');
+                const tableInfo =$('#DataTables_Table_0_info');
+                await searchInput.setValue("mik"); 
+                console.log('Displayed: ' + await tableInfo.getText());
+        })
+        
+})

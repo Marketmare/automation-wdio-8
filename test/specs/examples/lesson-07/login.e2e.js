@@ -1,7 +1,7 @@
 /**
  * Lesson 7: Code organization - Exercise 1
  */
-import {username, password, userFullName} from '../../fixtures.js'
+//import {username, password, userFullName} from '../../fixtures.js'
 
 async function openLoginPage() {
     await browser.reloadSession();

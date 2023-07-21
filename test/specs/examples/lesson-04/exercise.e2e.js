@@ -29,8 +29,8 @@ describe('Login Page', async () => {
         const passwordField = $('#password');
         const loginButton = $('.btn-primary');
 
-        await emailField.setValue(username);
-        await passwordField.setValue(password);
+        await emailField.setValue('da-app.admin@czechitas.cz');
+        await passwordField.setValue('Czechitas123');
         await loginButton.click();
 
         const userNameDropdown = $('.navbar-right').$('[data-toggle="dropdown"]');
@@ -43,7 +43,7 @@ describe('Login Page', async () => {
         const passwordField = $('#password');
         const loginButton = $('.btn-primary');
 
-        await emailField.setValue(username);
+        await emailField.setValue('da-app.admin@czechitas.cz');
         await passwordField.setValue('invalid');
         await loginButton.click();
 
@@ -66,8 +66,8 @@ describe('Login Page', async () => {
         const userNameDropdown = navbarRight.$('[data-toggle="dropdown"]');
         const logoutLink = $('#logout-link');
 
-        await emailField.setValue(username);
-        await passwordField.setValue(password);
+        await emailField.setValue('da-app.admin@czechitas.cz');
+        await passwordField.setValue('Czechitas123');
         await loginButton.click();
 
         console.log('User currently logged in: ' + await userNameDropdown.getText());
@@ -80,13 +80,13 @@ describe('Login Page', async () => {
     });
 });
 
-describe('Applications Page', async () => {
+describe.only('Applications Page', async () => {
 
     beforeEach(async () => {
         await browser.reloadSession();
         await browser.url('/prihlaseni');
-        await $('#email').setValue(username);
-        await $('#password').setValue(password);
+        await $('#email').setValue('da-app.admin@czechitas.cz');
+        await $('#password').setValue('Czechitas123');
         await $('.btn-primary').click();
         await $('=Přihlášky').click();
         await browser.pause(1000);
@@ -118,4 +118,5 @@ describe('Applications Page', async () => {
             console.log(await row.getText());
         }
     });
+
 });
