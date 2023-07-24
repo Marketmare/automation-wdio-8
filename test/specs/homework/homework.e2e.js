@@ -51,7 +51,7 @@ async function openRegistrationPage() {
 
         it('should sign in - valid credentials + create screenshot', async () => { 
         await getNameField().setValue('Mrkef von Záhon');
-        await getEmailField().setValue('carrot65@cake.com');
+        await getEmailField().setValue('carrot66@cake.com');
         await getPasswordField().setValue('Heslo123');
         await getPasswordConfirmField().setValue('Heslo12');
         await getPasswordConfirmField().clearValue();
